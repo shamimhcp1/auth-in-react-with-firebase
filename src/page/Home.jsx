@@ -1,5 +1,4 @@
 import { signOut } from "firebase/auth";
-import { useEffect } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { useNavigate } from "react-router-dom";
 import { auth } from "../firebase";
@@ -8,30 +7,12 @@ export const Home = () => {
   const navigate = useNavigate();
   const [user, loading, error] = useAuthState(auth);
 
-  useEffect(() => {
-    if (!loading && !user) {
-      navigate("/login");
-    }
-  }, [user, loading, navigate]);
-
   if (loading) {
     return (
       <div className="text-lg font-semibold flex justify-center items-center min-h-screen">
         Loading...
       </div>
     );
-  }
-
-  if (error) {
-    return (
-      <div className="text-lg font-semibold text-red-500 flex justify-center items-center min-h-screen">
-        Error: {error.message}
-      </div>
-    );
-  }
-
-  if (!user) {
-    return null;
   }
 
   const handleLogout = async () => {
